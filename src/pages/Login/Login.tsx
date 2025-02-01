@@ -17,6 +17,7 @@ import { useNavigate } from "@tanstack/react-router";
 import Link from "@/components/Link";
 import type { LoginRequest } from "@/interfaces/auth";
 import { postLogin } from "@/services/auth.service";
+import useAuthStore from "@/stores/authStore";
 
 const FormCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -53,14 +54,15 @@ const formOpts = formOptions({
 });
 
 const Login: FC = () => {
+  const login = useAuthStore((state) => state.login);
   const navigate = useNavigate({ from: "/login" });
 
   const form = useForm<LoginRequest>({
     ...formOpts,
     onSubmit: async ({ value }) => {
       await postLogin(value)
-        .then((response) => {
-          console.log(response);
+        .then((data) => {
+          login(data);
           navigate({ to: "/" });
         })
         .catch((error: ApiError) => toast.error(error.title));

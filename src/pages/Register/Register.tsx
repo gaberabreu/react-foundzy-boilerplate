@@ -17,6 +17,7 @@ import { useNavigate } from "@tanstack/react-router";
 import Link from "@/components/Link";
 import type { RegisterRequest } from "@/interfaces/auth";
 import { postRegister } from "@/services/auth.service";
+import useAuthStore from "@/stores/authStore";
 
 const FormCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -53,14 +54,15 @@ const formOpts = formOptions({
 });
 
 const Register: FC = () => {
+  const login = useAuthStore((state) => state.login);
   const navigate = useNavigate({ from: "/register" });
 
   const form = useForm<RegisterRequest>({
     ...formOpts,
     onSubmit: async ({ value }) => {
       await postRegister(value)
-        .then((response) => {
-          console.log(response);
+        .then((data) => {
+          login(data);
           navigate({ to: "/" });
         })
         .catch((error: ApiError) => toast.error(error.title));
