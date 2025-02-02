@@ -4,7 +4,7 @@ import { devtools, persist } from "zustand/middleware";
 import { AuthenticateResponse } from "@/interfaces/auth";
 
 export type AuthState = {
-  isAuthenticated?: boolean;
+  authenticated?: boolean;
   data?: AuthenticateResponse;
 };
 
@@ -17,8 +17,9 @@ const useAuthStore = create<AuthState & AuthAction>()(
   devtools(
     persist(
       (set) => ({
-        login: (data: AuthenticateResponse) => set(() => ({ isAuthenticated: true, data })),
-        logout: () => set(() => ({ isAuthenticated: false, data: undefined })),
+        authenticated: true,
+        login: (data: AuthenticateResponse) => set(() => ({ authenticated: true, data })),
+        logout: () => set(() => ({ authenticated: false, data: undefined })),
       }),
       { name: "authStore" }
     )

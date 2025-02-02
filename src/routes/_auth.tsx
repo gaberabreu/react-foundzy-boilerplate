@@ -7,7 +7,7 @@ const RouteComponent: FC = () => {
 
 export const Route = createFileRoute("/_auth")({
   beforeLoad: ({ context }) => {
-    if (context.auth.isAuthenticated) {
+    if (context.auth.authenticated) {
       throw redirect({
         to: "/",
       });
