@@ -5,11 +5,11 @@ import { AuthenticateResponse } from "@/interfaces/auth";
 
 export type AuthState = {
   authenticated?: boolean;
-  data?: AuthenticateResponse;
+  user?: AuthenticateResponse;
 };
 
 export type AuthAction = {
-  login: (data: AuthenticateResponse) => void;
+  login: (user: AuthenticateResponse) => void;
   logout: () => void;
 };
 
@@ -17,9 +17,8 @@ const useAuthStore = create<AuthState & AuthAction>()(
   devtools(
     persist(
       (set) => ({
-        authenticated: true,
-        login: (data: AuthenticateResponse) => set(() => ({ authenticated: true, data })),
-        logout: () => set(() => ({ authenticated: false, data: undefined })),
+        login: (user: AuthenticateResponse) => set(() => ({ authenticated: true, user })),
+        logout: () => set(() => ({ authenticated: false, user: undefined })),
       }),
       { name: "authStore" }
     )
