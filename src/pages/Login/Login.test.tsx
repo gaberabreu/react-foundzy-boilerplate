@@ -52,7 +52,7 @@ describe("Login", () => {
   });
 
   it("should toast error when form submission fails", async () => {
-    vi.mocked(postLogin).mockRejectedValue({ title: "Login failed" });
+    vi.mocked(postLogin).mockRejectedValue(new Error("Login failed"));
 
     const { getByText, getByLabelText } = render(<Login />);
 

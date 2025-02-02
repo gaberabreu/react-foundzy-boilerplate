@@ -52,7 +52,7 @@ describe("Register", () => {
   });
 
   it("should toast error when form submission fails", async () => {
-    vi.mocked(postRegister).mockRejectedValue({ title: "Register failed" });
+    vi.mocked(postRegister).mockRejectedValue(new Error("Register failed"));
 
     const { getByText, getByLabelText } = render(<Register />);
 

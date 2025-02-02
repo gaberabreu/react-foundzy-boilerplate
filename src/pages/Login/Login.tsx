@@ -65,7 +65,7 @@ const Login: FC = () => {
           login(data);
           navigate({ to: "/" });
         })
-        .catch((error: ApiError) => toast.error(error.title));
+        .catch((error) => toast.error(error.message));
     },
   });
 

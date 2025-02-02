@@ -15,14 +15,13 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 const onResponseError = async (error: AxiosError): Promise<AxiosResponse> => {
   let apiError = {
     title: error.message,
-    detail: error.message,
   } as ApiError;
 
   if (error.response?.data) {
     apiError = error?.response?.data as ApiError;
   }
 
-  return Promise.reject(apiError);
+  return Promise.reject(new Error(apiError.title));
 };
 
 const httpClient = axios.create({
